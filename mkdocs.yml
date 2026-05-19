@@ -1,0 +1,61 @@
+site_name: MolPACD
+site_url: https://molpacd.tools.blankenberglab.org/
+site_description: Documentation for MolPACD
+repo_url: https://github.com/BlankenbergLab/MolPACD
+repo_name: BlankenbergLab/MolPACD
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  custom_dir: overrides
+  logo: assets/images/blankenberglab-logo.svg
+  favicon: assets/favicon.ico
+  language: en
+  palette:
+    - scheme: default
+      primary: green
+      accent: amber
+  features:
+    - navigation.instant
+    - navigation.path
+    - navigation.sections
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - toc.follow
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths:
+            - src
+          options:
+            docstring_style: google
+            members_order: source
+            merge_init_into_class: true
+            separate_signature: true
+            show_if_no_docstring: false
+            show_root_heading: true
+            show_signature_annotations: true
+            show_source: true
+            signature_crossrefs: true
+
+extra_css:
+  - assets/brand.css
+
+extra:
+  generator: false
+
+nav:
+  - Home: index.md
+  - Quick Start: quickstart.md
+  - Command Line: cli.md
+  - Examples: examples.md
+  - API:
+      - Basic API: api.md
+      - Advanced API: advanced-api.md

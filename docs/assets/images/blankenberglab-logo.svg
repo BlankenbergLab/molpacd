@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="52 70 408 386" role="img" aria-label="Blankenberg Lab abstract logo">
+  <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="34" d="M133 339c55-33 112-61 170-84 42-17 79-39 110-70" />
+    <path stroke-width="34" d="M99 256c55 36 113 64 174 84 48 15 91 36 128 63" />
+    <path stroke-width="24" d="M152 173c34-45 72-70 114-74 48-5 89 18 124 65" />
+    <path stroke-width="24" d="M122 393c34 29 75 39 124 30 49-10 94-38 135-85" />
+    <ellipse cx="256" cy="256" rx="178" ry="73" stroke-width="22" transform="rotate(-32 256 256)" />
+    <ellipse cx="256" cy="256" rx="178" ry="73" stroke-width="22" transform="rotate(32 256 256)" />
+  </g>
+  <g fill="#000">
+    <circle cx="96" cy="256" r="32" />
+    <circle cx="133" cy="339" r="28" />
+    <circle cx="152" cy="173" r="28" />
+    <circle cx="256" cy="256" r="42" />
+    <circle cx="360" cy="173" r="28" />
+    <circle cx="379" cy="339" r="28" />
+    <circle cx="416" cy="256" r="32" />
+  </g>
+</svg>

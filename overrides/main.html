@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+  {{ super() }}
+  <link rel="apple-touch-icon" href="{{ 'assets/apple-touch-icon.png' | url }}">
+{% endblock %}
+
+{% block header %}
+  <header class="lab-masthead">
+    <div class="lab-shell lab-nav-row">
+      <a class="lab-brand" href="https://www.blankenberglab.org/">
+        <img
+          class="lab-brand-logo"
+          src="{{ 'assets/images/blankenberglab-logo.svg' | url }}"
+          alt=""
+          aria-hidden="true"
+        >
+        <span class="lab-brand-text">
+          <span class="lab-brand-kicker">Computational Life Sciences</span>
+          <span class="lab-brand-title">Blankenberg Lab</span>
+        </span>
+      </a>
+      <div class="lab-nav-controls">
+        <nav class="lab-nav-links" aria-label="Blankenberg Lab">
+          <a href="https://www.blankenberglab.org/">Home</a>
+          <a href="https://www.blankenberglab.org/research/">Research</a>
+          <a href="https://www.blankenberglab.org/members/">Members</a>
+          <a href="https://www.blankenberglab.org/publications/">Publications</a>
+          <a class="active" href="https://tools.blankenberglab.org/" aria-current="page">Tools</a>
+          <a href="https://www.blankenberglab.org/news/">News</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  {{ super() }}
+{% endblock %}

@@ -1,0 +1,14 @@
+{
+  "name": "molpacd-tools-blankenberglab-org",
+  "compatibility_date": "2026-05-28",
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page"
+  },
+  "routes": [
+    {
+      "pattern": "molpacd.tools.blankenberglab.org",
+      "custom_domain": true
+    }
+  ]
+}
