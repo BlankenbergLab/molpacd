@@ -1,0 +1,342 @@
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/fraunces/fraunces-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/fraunces/fraunces-latin-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/space-grotesk/space-grotesk-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("fonts/space-grotesk/space-grotesk-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/space-grotesk/space-grotesk-latin-700.woff2") format("woff2");
+}
+
+:root {
+  --lab-ink: #10231d;
+  --lab-forest: #17392d;
+  --lab-moss: #2d6a57;
+  --lab-gold: #d58b2a;
+  --lab-sand: #f5efe3;
+  --lab-paper: #fffaf4;
+  --lab-line: rgba(16, 35, 29, 0.12);
+  --lab-muted: #5d6d66;
+  --lab-shadow: 0 22px 48px rgba(16, 35, 29, 0.12);
+  --lab-radius: 22px;
+  --lab-lede: #2a3f37;
+  --lab-card-bg: rgba(255, 250, 244, 0.9);
+  --lab-header-bg: rgba(251, 246, 238, 0.88);
+  --lab-header-line: rgba(16, 35, 29, 0.08);
+  --lab-footer-line: rgba(16, 35, 29, 0.1);
+  --lab-page-spot-1: rgba(213, 139, 42, 0.16);
+  --lab-page-spot-2: rgba(45, 106, 87, 0.14);
+  --lab-page-bg-top: #fbf6ee;
+  --lab-page-bg-bottom: #f4efe6;
+  --lab-nav-active-bg: rgba(213, 139, 42, 0.14);
+  --lab-nav-active-text: #8a5717;
+  --lab-button-line: rgba(23, 57, 45, 0.24);
+
+  --md-primary-fg-color: var(--lab-forest);
+  --md-primary-bg-color: var(--lab-paper);
+  --md-accent-fg-color: var(--lab-gold);
+  --md-default-fg-color: var(--lab-ink);
+  --md-default-fg-color--light: var(--lab-muted);
+  --md-default-bg-color: transparent;
+  --md-typeset-a-color: var(--lab-forest);
+  --md-text-font: "Space Grotesk";
+  --md-code-font: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--lab-ink);
+  background:
+    radial-gradient(circle at top left, var(--lab-page-spot-1), transparent 26rem),
+    radial-gradient(circle at top right, var(--lab-page-spot-2), transparent 28rem),
+    linear-gradient(180deg, var(--lab-page-bg-top) 0%, var(--lab-page-bg-bottom) 100%);
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  color: var(--lab-ink);
+  letter-spacing: 0;
+}
+
+.md-typeset h1 {
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  font-weight: 700;
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+}
+
+.md-typeset a {
+  text-underline-offset: 0.14em;
+}
+
+.md-typeset a:hover,
+.md-typeset a:focus-visible {
+  color: var(--lab-nav-active-text);
+}
+
+.lab-masthead,
+.md-header,
+.md-tabs {
+  backdrop-filter: blur(16px);
+  background: var(--lab-header-bg);
+  border-bottom: 1px solid var(--lab-header-line);
+  box-shadow: none;
+  color: var(--lab-ink);
+}
+
+.lab-masthead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.lab-shell {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.lab-nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 76px;
+}
+
+.lab-brand {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 12.8px;
+  color: inherit;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.lab-brand-logo {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+}
+
+.lab-brand-text {
+  display: block;
+}
+
+.lab-brand-kicker {
+  display: block;
+  font-size: 12.8px;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--lab-moss);
+}
+
+.lab-brand-title {
+  display: block;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-size: 20.8px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.lab-nav-controls {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  gap: 8.8px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.lab-nav-links {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  gap: 8.8px;
+  justify-content: flex-end;
+  min-width: 0;
+}
+
+.lab-nav-links a {
+  border-radius: 999px;
+  color: var(--lab-muted);
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.2;
+  padding: 10.88px 15.2px;
+  text-decoration: none;
+}
+
+.lab-nav-links a.active,
+.lab-nav-links a:hover,
+.lab-nav-links a:focus-visible {
+  background: var(--lab-nav-active-bg);
+  color: var(--lab-nav-active-text);
+}
+
+.md-header {
+  position: sticky;
+  top: 76px;
+  z-index: 4;
+}
+
+.md-header__title,
+.md-tabs__link,
+.md-nav__title,
+.md-nav__link,
+.md-search__input {
+  font-family: "Space Grotesk", "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 2rem;
+  width: 2rem;
+}
+
+.md-tabs {
+  top: 132px;
+}
+
+.md-tabs__link {
+  border-radius: 999px;
+  color: var(--lab-muted);
+  font-weight: 500;
+  margin-top: 0.35rem;
+  opacity: 1;
+  padding: 0.5rem 0.85rem;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover,
+.md-tabs__link:focus {
+  background: var(--lab-nav-active-bg);
+  color: var(--lab-nav-active-text);
+}
+
+.md-main {
+  background: transparent;
+}
+
+.md-main__inner {
+  margin-top: 1.6rem;
+}
+
+.md-content {
+  background: var(--lab-card-bg);
+  border: 1px solid var(--lab-line);
+  border-radius: var(--lab-radius);
+  box-shadow: var(--lab-shadow);
+  padding: 0 1.2rem 1.2rem;
+}
+
+.md-sidebar {
+  padding-top: 1rem;
+}
+
+.md-nav__link--active,
+.md-nav__link:focus,
+.md-nav__link:hover {
+  color: var(--lab-nav-active-text);
+}
+
+.md-typeset code,
+.md-typeset pre {
+  border-radius: 0.55rem;
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-color: var(--lab-line);
+  border-radius: 0.85rem;
+  box-shadow: none;
+}
+
+.md-footer {
+  background: transparent;
+  color: var(--lab-muted);
+}
+
+.md-footer-meta {
+  background: transparent;
+  border-top: 1px solid var(--lab-footer-line);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--lab-gold);
+  outline-offset: 3px;
+}
+
+@media (max-width: 920px) {
+  .lab-masthead {
+    position: relative;
+    top: auto;
+  }
+
+  .lab-nav-row {
+    align-items: start;
+    flex-direction: column;
+    padding: 16px 0;
+  }
+
+  .lab-nav-controls {
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .lab-nav-links {
+    justify-content: flex-start;
+  }
+
+  .md-header {
+    top: 0;
+  }
+
+  .md-content {
+    border-radius: 0.9rem;
+    padding: 0 0.8rem 0.8rem;
+  }
+}

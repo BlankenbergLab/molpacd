@@ -1,0 +1,12 @@
+include CHANGELOG.md
+include CITATION.cff
+include CONTRIBUTING.md
+include LICENSE
+include Makefile
+include README.md
+include environment-dev.yml
+exclude mkdocs.yml
+exclude wrangler.jsonc
+prune docs
+prune overrides
+recursive-include tests *.md *.pdb *.py
