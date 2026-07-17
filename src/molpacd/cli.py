@@ -114,6 +114,12 @@ def _add_analysis_options(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--radius-scale", type=float, default=1.0, help="scale opening radii")
     parser.add_argument("--window", type=float, default=6.0, help="opening slice width in Angstrom")
     parser.add_argument("--min-atoms", type=int, default=12, help="minimum atoms per opening slice")
+    parser.add_argument(
+        "--inversion",
+        type=float,
+        default=0.0,
+        help="distance in Angstrom to invert caps into aperture (0 = no inversion)",
+    )
 
 
 def _options_from_args(args: argparse.Namespace) -> CapOptions:
@@ -132,6 +138,7 @@ def _options_from_args(args: argparse.Namespace) -> CapOptions:
         seed=getattr(args, "seed", None),
         min_clearance=getattr(args, "min_clearance", 1.4),
         shared_radius=getattr(args, "shared_radius", True),
+        inversion=getattr(args, "inversion", 0.0),
     )
 
 
