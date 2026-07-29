@@ -75,6 +75,7 @@ class CapOptions:
     seed: Optional[int] = None
     min_clearance: float = 1.4
     shared_radius: bool = True
+    inversion: float = 0.0
 
 
 @dataclass(frozen=True)
@@ -143,6 +144,8 @@ def validate_cap_options(options: CapOptions) -> None:
         raise ValueError("min_clearance must be zero or greater")
     if not isinstance(options.shared_radius, bool):
         raise ValueError("shared_radius must be a boolean")
+    if options.inversion < 0:
+        raise ValueError("inversion must be zero or greater")
     normalize_chain_id(options.chain)
     atom_name = normalize_atom_name(options.atom_name)
     normalize_element(options.element, atom_name or "")
