@@ -46,14 +46,14 @@ For each release:
 python -m pip install \
   --index-url https://test.pypi.org/simple/ \
   --extra-index-url https://pypi.org/simple/ \
-  molpacd==0.1.0
+  molpacd==0.2.0
 ```
 
 7. Create and push an annotated version tag to publish to PyPI:
 
 ```bash
-git tag -a v0.1.0 -m "molpacd 0.1.0"
-git push origin v0.1.0
+git tag -a v0.2.0 -m "molpacd 0.2.0"
+git push origin v0.2.0
 ```
 
 ## Expectations
