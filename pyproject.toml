@@ -45,7 +45,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "build>=1.0",
-  "mypy>=1.8,<2",
+  "mypy>=1.8,<3",
   "nox>=2024.4.15",
   "pytest>=7.4",
   "pytest-cov>=4.1",
