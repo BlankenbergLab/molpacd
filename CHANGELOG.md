@@ -8,6 +8,11 @@
   recognized from a bundled `lipid_fragments.json`, optionally overridden
   with `--lipid-fragments-json`.
 
+## 0.2.0 - 2026-07-29
+
+- Added configurable cap inversion through the Python API and command-line interface.
+- Updated the GitHub checkout action to its Node.js 24-based release.
+
 ## 0.1.0 - 2026-06-26
 
 - Added safer cap-removal metadata with generated atom and residue ranges.

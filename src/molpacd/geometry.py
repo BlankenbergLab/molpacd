@@ -144,14 +144,18 @@ def generate_cap_disk(
     radius: float,
     spacing: float,
     side_sign: float,
+    inversion: float = 0.0,
 ) -> NDArray[np.float64]:
     if spacing <= 0:
         raise ValueError("spacing must be greater than zero")
     if radius <= 0:
         raise ValueError("opening radius must be greater than zero")
+    if inversion < 0:
+        raise ValueError("inversion must be zero or greater")
 
     center = np.array(centroid, dtype=float)
     cap_direction = normalize_vector(np.array(axis, dtype=float) * side_sign)
+    center = center - inversion * cap_direction
 
     if abs(float(cap_direction[2])) < 0.9:
         perp1 = np.cross(cap_direction, np.array([0.0, 0.0, 1.0]))

@@ -97,7 +97,7 @@ def add_caps(
         opening_radius = shared_radius if shared_radius is not None else opening.radius
         radius = opening_radius * options.radius_scale
         requested = generate_cap_disk(
-            opening.centroid, _tuple(axis), radius, options.spacing, side_sign
+            opening.centroid, _tuple(axis), radius, options.spacing, side_sign, options.inversion
         )
         accepted, skipped = filter_collisions(requested, existing_coords, options.min_clearance)
 
