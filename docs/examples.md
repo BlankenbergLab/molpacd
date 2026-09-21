@@ -28,3 +28,16 @@ molpacd remove capped.pdb -o decapped.pdb --json
 Removal uses MolPACD metadata when present. If metadata is absent, or if you
 intentionally override metadata values, pass `--force` with explicit matching
 criteria.
+
+## Remove Lipids Packed Inside A Cavity
+
+```bash
+molpacd remove-lipids packed.pdb -o cleaned.pdb --json
+```
+
+Override the estimated cavity radius or margin when the automatic estimate
+needs adjustment:
+
+```bash
+molpacd remove-lipids packed.pdb -o cleaned.pdb --cavity-radius 8.0 --margin 3.0
+```

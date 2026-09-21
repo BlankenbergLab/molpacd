@@ -2,8 +2,8 @@
 
 **MolPACD** is the **Molecular Pore Aperture Cap Designer**. It provides a
 Python API and command line interface for analyzing pore openings, adding
-molecular aperture caps, and removing MolPACD-generated caps from protein
-structure files.
+molecular aperture caps, removing MolPACD-generated caps, and removing lipids
+packed inside protein cavities, from protein structure files.
 
 MolPACD works with PDB and mmCIF inputs and writes minimal PDB/mmCIF outputs
 focused on atom records plus MolPACD provenance metadata.
@@ -38,7 +38,8 @@ make docs-serve
 ## Start Here
 
 - Follow the [Quick Start](quickstart.md) for common CLI and Python examples.
-- Use the [Command Line](cli.md) reference for `analyze`, `add`, and `remove`.
+- Use the [Command Line](cli.md) reference for `analyze`, `add`, `remove`, and
+  `remove-lipids`.
 - Browse the [Basic API](api.md) for the import-root interface.
 - Use the [Advanced API](advanced-api.md) for module-level details.
 

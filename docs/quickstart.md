@@ -68,6 +68,15 @@ requires `--force`.
 molpacd remove capped.pdb -o decapped.pdb --resname DUM --chain Z --force
 ```
 
+## Remove Cavity Lipids
+
+```bash
+molpacd remove-lipids packed.pdb -o cleaned.pdb --json
+```
+
+The cavity is estimated from the protein's CA atoms; override it with
+`--cavity-radius` and `--margin` if needed.
+
 ## Python API
 
 ```python

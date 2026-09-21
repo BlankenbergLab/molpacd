@@ -9,8 +9,9 @@ from typing import Any, Optional, Sequence
 
 from molpacd._version import __version__
 from molpacd.capper import add_caps, analyze_structure, remove_caps
+from molpacd.cavity_lipids_pdb import remove_cavity_lipids_pdb
 from molpacd.io import read_structure, write_structure
-from molpacd.models import AnalysisResult, CapOptions, CapResult
+from molpacd.models import AnalysisResult, CapOptions, CapResult, CavityLipidOptions
 
 
 def main(argv: Optional[Sequence[str]] = None) -> int:
@@ -87,6 +88,34 @@ def build_parser() -> argparse.ArgumentParser:
     )
     remove.add_argument("--json", action="store_true", help="write machine-readable JSON")
     remove.set_defaults(func=_cmd_remove)
+
+    remove_lipids = subparsers.add_parser(
+        "remove-lipids", help="remove lipids packed inside a protein cavity"
+    )
+    remove_lipids.add_argument("input", type=Path)
+    remove_lipids.add_argument("-o", "--output", type=Path, required=True)
+    remove_lipids.add_argument(
+        "--cavity-radius",
+        "-r",
+        type=float,
+        default=None,
+        help="override automatic cavity radius detection (in Angstrom)",
+    )
+    remove_lipids.add_argument(
+        "--margin",
+        "-m",
+        type=float,
+        default=2.0,
+        help="additional margin around the cavity (default: 2.0 Angstrom)",
+    )
+    remove_lipids.add_argument(
+        "--lipid-fragments-json",
+        type=Path,
+        default=None,
+        help="path to a lipid_fragments.json overriding the bundled lipid fragment list",
+    )
+    remove_lipids.add_argument("--json", action="store_true", help="write machine-readable JSON")
+    remove_lipids.set_defaults(func=_cmd_remove_lipids)
     return parser
 
 
@@ -194,6 +223,29 @@ def _cmd_remove(args: argparse.Namespace) -> int:
         f"removed {result.removed_count} atoms matching residue {result.resname}"
         f"{f' chain {result.chain}' if result.chain else ''}"
         f"{f' atom {result.atom_name}' if result.atom_name else ''}"
+    )
+    print(f"wrote {args.output}")
+    return 0
+
+
+def _cmd_remove_lipids(args: argparse.Namespace) -> int:
+    options = CavityLipidOptions(
+        cavity_radius=args.cavity_radius,
+        margin=args.margin,
+        lipid_fragments_json=str(args.lipid_fragments_json) if args.lipid_fragments_json else None,
+    )
+    result = remove_cavity_lipids_pdb(args.input, args.output, options)
+    payload = asdict(result)
+    payload["output"] = str(args.output)
+    payload["wrote"] = str(args.output)
+
+    if args.json:
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0
+
+    print(
+        f"removed {result.removed_lipid_residues} of {result.total_lipid_residues} "
+        f"lipid residues from the cavity (kept {result.kept_lipid_residues})"
     )
     print(f"wrote {args.output}")
     return 0

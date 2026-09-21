@@ -1,15 +1,68 @@
 from __future__ import annotations
 
 import json
+import math
 import runpy
 import sys
 from pathlib import Path
+from typing import List
 
 import pytest
 
 from molpacd.cli import main
+from molpacd.io import write_structure
+from molpacd.models import AtomRecord, StructureData
 
 FIXTURE = Path(__file__).parent / "data" / "2iww.pdb"
+
+
+def _cavity_lipid_fixture(path: Path) -> None:
+    atoms: List[AtomRecord] = []
+    serial = 1
+    for z in range(-15, 16, 5):
+        for i in range(12):
+            angle = 2 * math.pi * i / 12
+            atoms.append(
+                AtomRecord(
+                    record="ATOM",
+                    serial=serial,
+                    name="CA",
+                    resname="ALA",
+                    chain_id="P",
+                    res_seq=serial,
+                    x=8.0 * math.cos(angle),
+                    y=8.0 * math.sin(angle),
+                    z=float(z),
+                )
+            )
+            serial += 1
+    atoms.append(
+        AtomRecord(
+            record="ATOM",
+            serial=9001,
+            name="C1",
+            resname="PC",
+            chain_id="L",
+            res_seq=1,
+            x=0.0,
+            y=0.0,
+            z=0.0,
+        )
+    )
+    atoms.append(
+        AtomRecord(
+            record="ATOM",
+            serial=9002,
+            name="C1",
+            resname="PC",
+            chain_id="L",
+            res_seq=2,
+            x=20.0,
+            y=0.0,
+            z=0.0,
+        )
+    )
+    write_structure(StructureData(atoms=atoms, source_format="pdb"), path)
 
 
 def test_cli_analyze_json(capsys: pytest.CaptureFixture[str]) -> None:
@@ -95,6 +148,52 @@ def test_cli_add_json_and_remove_outputs(
     assert remove_payload["removed_count"] == add_payload["added_count"]
     assert remove_payload["wrote"] == str(decapped_json)
     assert decapped_json.exists()
+
+
+def test_cli_remove_lipids_text_and_json(
+    tmp_path: Path, capsys: pytest.CaptureFixture[str]
+) -> None:
+    fixture = tmp_path / "packed.pdb"
+    _cavity_lipid_fixture(fixture)
+    cleaned_text = tmp_path / "cleaned-text.pdb"
+    cleaned_json = tmp_path / "cleaned-json.pdb"
+
+    assert main(["remove-lipids", str(fixture), "-o", str(cleaned_text)]) == 0
+    output = capsys.readouterr().out
+    assert "removed 1 of 2 lipid residues" in output
+    assert "wrote" in output
+    assert cleaned_text.exists()
+
+    assert main(["remove-lipids", str(fixture), "-o", str(cleaned_json), "--json"]) == 0
+    payload = json.loads(capsys.readouterr().out)
+    assert payload["total_lipid_residues"] == 2
+    assert payload["removed_lipid_residues"] == 1
+    assert payload["kept_lipid_residues"] == 1
+    assert payload["wrote"] == str(cleaned_json)
+    assert cleaned_json.exists()
+
+
+def test_cli_remove_lipids_cavity_radius_and_margin_overrides(tmp_path: Path) -> None:
+    fixture = tmp_path / "packed.pdb"
+    _cavity_lipid_fixture(fixture)
+    cleaned = tmp_path / "cleaned.pdb"
+
+    assert (
+        main(
+            [
+                "remove-lipids",
+                str(fixture),
+                "-o",
+                str(cleaned),
+                "--cavity-radius",
+                "25",
+                "--margin",
+                "0",
+                "--json",
+            ]
+        )
+        == 0
+    )
 
 
 def test_cli_reports_errors_and_debug_reraises(

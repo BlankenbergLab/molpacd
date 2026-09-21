@@ -7,6 +7,14 @@ import-root API.
 
 ::: molpacd.capper
 
+## Cavity Lipid Removal
+
+::: molpacd.cavity_lipids
+
+## Lipid Names
+
+::: molpacd.lipids
+
 ## Data Models
 
 ::: molpacd.models
