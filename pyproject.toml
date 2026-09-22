@@ -67,7 +67,7 @@ Issues = "https://github.com/BlankenbergLab/molpacd/issues"
 where = ["src"]
 
 [tool.setuptools.package-data]
-molpacd = ["py.typed"]
+molpacd = ["py.typed", "data/lipid_fragments.json"]
 
 [tool.pytest.ini_options]
 addopts = "-ra"

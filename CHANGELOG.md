@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Added `remove-lipids` (`remove_cavity_lipids`) to detect and remove lipids
+  packed inside a protein cavity (e.g. a beta barrel interior), ported from
+  the standalone MemGen `remove_cavity_lipids.py` script. Lipid residues are
+  recognized from a bundled `lipid_fragments.json`, optionally overridden
+  with `--lipid-fragments-json`.
+
 ## 0.2.0 - 2026-07-29
 
 - Added configurable cap inversion through the Python API and command-line interface.

@@ -79,3 +79,33 @@ Additional options:
 - `--force`: allow removal by residue/chain/atom match when metadata is absent
   or overridden.
 - `--json`: write machine-readable JSON.
+
+## Remove Cavity Lipids
+
+Remove lipids that packing tools (such as packmol-memgen) placed inside a
+protein cavity, e.g. the interior of a beta barrel, instead of only in the
+surrounding bilayer.
+
+```bash
+molpacd remove-lipids packed.pdb -o cleaned.pdb
+molpacd remove-lipids packed.pdb -o cleaned.pdb --cavity-radius 8.0 --margin 2.0 --json
+```
+
+The cavity is estimated from the protein's CA atoms (falling back to all
+protein atoms if none are found): a principal axis and center from PCA, and
+an inner radius from the average backbone radius. Lipid residues (grouped by
+chain and residue number, since a lipid is often stored as separate head/tail
+fragment residues) whose center of mass falls inside that cavity, plus
+`--margin`, are removed.
+
+Lipid residue names are recognized from a bundled `lipid_fragments.json`
+mapping full lipid names (e.g. `POPC`) to their head/tail fragment residue
+names (e.g. `OL`, `PA`, `PC`). Additional options:
+
+- `--cavity-radius`: override the automatically estimated inner radius, in
+  Angstrom.
+- `--margin`: additional margin added around the estimated cavity boundary
+  (default: 2.0 Angstrom).
+- `--lipid-fragments-json`: path to a `lipid_fragments.json` file overriding
+  the bundled lipid fragment list.
+- `--json`: write machine-readable JSON.

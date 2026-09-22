@@ -11,11 +11,13 @@ import pytest
 
 from molpacd import (
     CapOptions,
+    CavityLipidOptions,
     __version__,
     add_caps,
     analyze_structure,
     read_structure,
     remove_caps,
+    remove_cavity_lipids,
     write_structure,
 )
 
@@ -173,6 +175,16 @@ def test_remove_rejects_invalid_metadata_ranges(metadata: dict[str, str], match:
 
     with pytest.raises(ValueError, match=match):
         remove_caps(structure)
+
+
+def test_remove_cavity_lipids_on_lipid_free_fixture_is_a_no_op() -> None:
+    structure = read_structure(FIXTURE)
+
+    cleaned, result = remove_cavity_lipids(structure, CavityLipidOptions(margin=2.0))
+
+    assert result.total_lipid_residues == 0
+    assert result.removed_lipid_residues == 0
+    assert len(cleaned.atoms) == len(structure.atoms)
 
 
 def test_write_and_read_mmcif_round_trip(tmp_path: Path) -> None:

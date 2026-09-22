@@ -127,6 +127,34 @@ class RemoveResult:
     atom_name: Optional[str]
 
 
+@dataclass(frozen=True)
+class CavityLipidOptions:
+    cavity_radius: Optional[float] = None
+    margin: float = 2.0
+    lipid_fragments_json: Optional[str] = None
+
+
+@dataclass(frozen=True)
+class CavityLipidResult:
+    total_lipid_residues: int
+    removed_lipid_residues: int
+    kept_lipid_residues: int
+    center: Tuple[float, float, float]
+    axis: Tuple[float, float, float]
+    inner_radius: float
+    outer_radius: float
+    z_min: float
+    z_max: float
+    margin: float
+
+
+def validate_cavity_lipid_options(options: CavityLipidOptions) -> None:
+    if options.margin < 0:
+        raise ValueError("margin must be zero or greater")
+    if options.cavity_radius is not None and options.cavity_radius <= 0:
+        raise ValueError("cavity_radius must be greater than zero")
+
+
 def validate_cap_options(options: CapOptions) -> None:
     if options.selection not in {"ca", "backbone", "all"}:
         raise ValueError("selection must be one of ca, backbone, or all")

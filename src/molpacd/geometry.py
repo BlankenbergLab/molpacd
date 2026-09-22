@@ -132,7 +132,7 @@ def _opening_from_projection(
     return Opening(
         side="negative" if side == "negative" else "positive",
         atom_count=int(indices.size),
-        centroid=_coord_tuple(centroid),
+        centroid=coord_tuple(centroid),
         radius=radius,
         projection=projection,
     )
@@ -205,5 +205,63 @@ def filter_collisions(
     return np.array(kept, dtype=float), skipped
 
 
-def _coord_tuple(values: NDArray[np.float64]) -> Tuple[float, float, float]:
+def principal_axis_pca(
+    coords: NDArray[np.float64],
+) -> Tuple[NDArray[np.float64], NDArray[np.float64]]:
+    """Center and PCA principal axis of a point cloud, oriented toward +z."""
+    center = np.mean(coords, axis=0)
+    centered = coords - center
+    covariance = np.cov(centered, rowvar=False)
+    eigenvalues, eigenvectors = np.linalg.eigh(covariance)
+    axis = eigenvectors[:, int(np.argmax(eigenvalues))]
+    if axis[2] < 0:
+        axis = -axis
+    return center, normalize_vector(axis)
+
+
+def barrel_radii(
+    coords: NDArray[np.float64],
+    center: NDArray[np.float64],
+    axis: NDArray[np.float64],
+) -> Tuple[float, float, float, float]:
+    """Estimate a beta-barrel-like inner/outer radius and axial extent.
+
+    Returns ``(inner_radius, outer_radius, z_min, z_max)`` relative to
+    ``center``/``axis``. The inner radius is approximated as 60% of the mean
+    radial distance, which is typical for beta barrel backbone geometry.
+    """
+    relative = coords - center
+    projections = np.dot(relative, axis)
+    z_min = float(np.min(projections))
+    z_max = float(np.max(projections))
+
+    axial = np.outer(projections, axis)
+    radial = relative - axial
+    distances = np.linalg.norm(radial, axis=1)
+
+    inner_radius = float(np.mean(distances)) * 0.6
+    outer_radius = float(np.max(distances))
+    return inner_radius, outer_radius, z_min, z_max
+
+
+def point_inside_cylinder(
+    point: NDArray[np.float64],
+    center: NDArray[np.float64],
+    axis: NDArray[np.float64],
+    inner_radius: float,
+    z_min: float,
+    z_max: float,
+    margin: float,
+) -> bool:
+    """Whether `point` falls inside the axial cylinder defined by the other arguments."""
+    relative = point - center
+    z_proj = float(np.dot(relative, axis))
+    if z_proj < z_min - margin or z_proj > z_max + margin:
+        return False
+    radial = relative - z_proj * axis
+    radial_distance = float(np.linalg.norm(radial))
+    return radial_distance < inner_radius + margin
+
+
+def coord_tuple(values: NDArray[np.float64]) -> Tuple[float, float, float]:
     return (float(values[0]), float(values[1]), float(values[2]))

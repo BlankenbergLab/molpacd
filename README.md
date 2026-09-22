@@ -1,7 +1,8 @@
 # MolPACD
 
 **MolPACD** is the **Molecular Pore Aperture Cap Designer**. It designs, adds,
-analyzes, and removes molecular aperture caps in protein structures.
+analyzes, and removes molecular aperture caps in protein structures, and
+removes lipids packed inside protein cavities.
 
 The first implementation is derived from the MemGen beta-barrel water-cap script,
 but generalizes the workflow for PDB and mmCIF structures with configurable axes,
@@ -90,6 +91,13 @@ MolPACD writes cap provenance metadata and uses it during removal so matching
 non-cap atoms are not removed accidentally. If metadata is absent, or if you
 override metadata values such as residue name, chain, or atom name, removal
 requires `--force`.
+
+Remove lipids packed inside a protein cavity (e.g. by packmol-memgen inside a
+beta barrel interior):
+
+```bash
+molpacd remove-lipids packed.pdb -o cleaned.pdb
+```
 
 ## Format Notes
 
