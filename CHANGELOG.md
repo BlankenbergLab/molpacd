@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 - 2026-09-30
 
 - Added `remove-lipids` (`remove_cavity_lipids`) to detect and remove lipids
   packed inside a protein cavity (e.g. a beta barrel interior), ported from
